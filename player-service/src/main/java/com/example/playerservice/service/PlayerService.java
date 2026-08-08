@@ -1,17 +1,18 @@
 package com.example.playerservice.service;
 
+import com.example.playerservice.DTO.PlayerIdsRequest;
 import com.example.playerservice.entity.PlayerEntity;
-import com.example.playerservice.entity.PlayerRequest;
-import com.example.playerservice.entity.PlayerResponse;
-import com.example.playerservice.repository.Repository;
+import com.example.playerservice.DTO.PlayerRequest;
+import com.example.playerservice.DTO.PlayerResponse;
+import com.example.playerservice.repository.PlayerRepository;
 import lombok.AllArgsConstructor;
 
 import java.util.List;
 
 @org.springframework.stereotype.Service
 @AllArgsConstructor
-public class Service {
-    private final Repository repository;
+public class PlayerService {
+    private final PlayerRepository repository;
 
     public Long createPlayer(PlayerRequest request){
         PlayerEntity playerEntity = new PlayerEntity();
@@ -29,10 +30,10 @@ public class Service {
         return PlayerResponse.fromEntity(entity);
     }
 
-    public List<PlayerResponse> getAllPlayers(){
-        return repository.findAll()
+    public List<PlayerResponse> getAllPlayersByIds(PlayerIdsRequest ids){
+        return repository.findAllById(ids.getIds())
                 .stream()
-                .map(PlayerResponse::fromEntity)
+                .map(player->PlayerResponse.fromEntity(player))
                 .toList();
     }
 }

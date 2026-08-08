@@ -1,14 +1,12 @@
-package com.example.playerservice.entity;
+package com.example.playerservice.DTO;
 
-import jakarta.persistence.Column;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -17,6 +15,7 @@ import java.time.LocalDateTime;
 public class PlayerRequest {
 
     @NotBlank
+    @Size(min = 2, max = 30)
     private String name;
 
     @Email

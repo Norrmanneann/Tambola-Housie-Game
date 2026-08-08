@@ -16,6 +16,7 @@ import java.time.LocalDateTime;
 @Setter
 @Getter
 @Entity
+@Table(name = "players_db")
 public class PlayerEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

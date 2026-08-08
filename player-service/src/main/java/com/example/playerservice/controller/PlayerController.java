@@ -1,8 +1,9 @@
 package com.example.playerservice.controller;
 
-import com.example.playerservice.entity.PlayerRequest;
-import com.example.playerservice.entity.PlayerResponse;
-import com.example.playerservice.service.Service;
+import com.example.playerservice.DTO.PlayerIdsRequest;
+import com.example.playerservice.DTO.PlayerRequest;
+import com.example.playerservice.DTO.PlayerResponse;
+import com.example.playerservice.service.PlayerService;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -14,8 +15,8 @@ import java.util.List;
 @RestController
 @RequestMapping("player/api")
 @AllArgsConstructor
-public class Controller {
-    private final Service service;
+public class PlayerController {
+    private final PlayerService service;
 
     @PostMapping
     public ResponseEntity<Long> createPlayer(@Valid @RequestBody PlayerRequest request){
@@ -27,8 +28,9 @@ public class Controller {
         return ResponseEntity.status(HttpStatus.FOUND).body(service.getPlayer(id));
     }
 
-    @GetMapping
-    public ResponseEntity<List<PlayerResponse>> getAllPlayers(){
-        return ResponseEntity.status(HttpStatus.FOUND).body(service.getAllPlayers());
+    @PostMapping("/ids")
+    public ResponseEntity<List<PlayerResponse>> getAllPlayersById(@RequestBody PlayerIdsRequest request){
+        List<PlayerResponse> responses = service.getAllPlayersByIds(request);
+        return ResponseEntity.status(HttpStatus.FOUND).body(responses);
     }
 }

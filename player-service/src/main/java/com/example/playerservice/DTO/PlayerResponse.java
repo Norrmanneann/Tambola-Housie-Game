@@ -1,7 +1,7 @@
-package com.example.playerservice.entity;
+package com.example.playerservice.DTO;
 
+import com.example.playerservice.entity.PlayerEntity;
 import lombok.*;
-import org.springframework.context.annotation.Bean;
 
 import java.time.LocalDateTime;
 
