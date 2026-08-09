@@ -14,18 +14,19 @@ import java.util.List;
 public class PlayerService {
     private final PlayerRepository repository;
 
-    public Long createPlayer(PlayerRequest request){
+    public PlayerResponse createPlayer(PlayerRequest request){
         PlayerEntity playerEntity = new PlayerEntity();
         playerEntity.setName(request.getName());
         playerEntity.setEmail(request.getEmail());
 
         PlayerEntity entity = repository.save(playerEntity);
 
-        return entity.getId();
+        return PlayerResponse.fromEntity(entity);
     }
 
     public PlayerResponse getPlayer(Long id){
-        PlayerEntity entity = repository.getById(id);
+        PlayerEntity entity = repository.findById(id)
+                .orElseThrow(()->new RuntimeException("Id not found"));
 
         return PlayerResponse.fromEntity(entity);
     }

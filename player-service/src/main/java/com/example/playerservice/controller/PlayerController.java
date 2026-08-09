@@ -19,13 +19,13 @@ public class PlayerController {
     private final PlayerService service;
 
     @PostMapping
-    public ResponseEntity<Long> createPlayer(@Valid @RequestBody PlayerRequest request){
-        return ResponseEntity.ok(service.createPlayer(request));
+    public ResponseEntity<PlayerResponse> createPlayer(@Valid @RequestBody PlayerRequest request){
+        return ResponseEntity.status(HttpStatus.CREATED).body(service.createPlayer(request));
     }
 
     @GetMapping("{id}")
     public ResponseEntity<PlayerResponse> getPlayer(@PathVariable Long id){
-        return ResponseEntity.status(HttpStatus.FOUND).body(service.getPlayer(id));
+        return ResponseEntity.status(HttpStatus.OK).body(service.getPlayer(id));
     }
 
     @PostMapping("/ids")

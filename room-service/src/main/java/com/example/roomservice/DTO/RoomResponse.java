@@ -1,11 +1,10 @@
-package com.example.roomservice.entity;
+package com.example.roomservice.DTO;
 
-import jakarta.persistence.*;
+import com.example.roomservice.entity.RoomEntity;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.data.annotation.CreatedBy;
 
 import java.time.LocalDateTime;
+import java.util.Set;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -18,7 +17,8 @@ public class RoomResponse {
     private int maxPlayers;
     private int availableSlots;
     private RoomEntity.Status status;
-    private String createdBy;
+    private Set<Long> playerIds;
+    private Long createdBy;
     private LocalDateTime createdAt;
 
     public static RoomResponse fromEntity(RoomEntity entity){
@@ -28,6 +28,7 @@ public class RoomResponse {
                 .maxPlayers(entity.getMaxPlayers())
                 .availableSlots(entity.getAvailableSlots())
                 .status(entity.getStatus())
+                .playerIds(entity.getPlayerIds())
                 .createdBy(entity.getCreatedBy())
                 .createdAt(entity.getCreatedAt())
                 .build();

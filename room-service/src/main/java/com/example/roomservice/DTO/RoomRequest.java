@@ -1,6 +1,5 @@
-package com.example.roomservice.entity;
+package com.example.roomservice.DTO;
 
-import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -13,8 +12,8 @@ import lombok.Setter;
 @NoArgsConstructor
 public class RoomRequest {
 
-//    @NotBlank
-//    private int playerId;
+    @NotBlank
+    private Long playerId;
     @NotBlank
     private int maxPlayers;
 }

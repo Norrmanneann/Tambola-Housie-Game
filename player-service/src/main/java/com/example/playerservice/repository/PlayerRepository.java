@@ -7,12 +7,13 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
 import java.util.List;
+import java.util.Optional;
 
 @org.springframework.stereotype.Repository
 public interface PlayerRepository extends JpaRepository<PlayerEntity, Long> {
     boolean existsByEmail(String email);
 
-    PlayerEntity getById(Long id);
+    Optional<PlayerEntity> findById(Long id);
 
     @Query(nativeQuery = true, value = "select * from players_db where id in (:ids)")
     List<PlayerEntity> findAllByIds(@Param("ids") List<Long> ids);

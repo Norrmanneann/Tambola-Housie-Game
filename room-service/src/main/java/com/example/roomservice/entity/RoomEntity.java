@@ -17,6 +17,7 @@ import java.util.Set;
 @Setter
 @Getter
 @Entity
+@Table(name = "room_db")
 public class RoomEntity {
 
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -31,12 +32,12 @@ public class RoomEntity {
     private Status status;
 
     @CreatedBy
-    private String createdBy;
+    private Long createdBy;
 
-//    @ElementCollection
-//    @CollectionTable(name = "room_players", joinColumns = @JoinColumn(name = "room_id"))
-//    @Column(name = "player_id")
-//    private Set<Long> playerIds = new HashSet<>();
+    @ElementCollection
+    @CollectionTable(name = "room_players", joinColumns = @JoinColumn(name = "room_id"))
+    @Column(name = "player_id")
+    private Set<Long> playerIds = new HashSet<>();
 
     @Column(updatable = false, nullable = false)
     private LocalDateTime createdAt;
