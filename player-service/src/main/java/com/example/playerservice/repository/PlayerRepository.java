@@ -11,7 +11,7 @@ import java.util.Optional;
 
 @org.springframework.stereotype.Repository
 public interface PlayerRepository extends JpaRepository<PlayerEntity, Long> {
-    boolean existsByEmail(String email);
+//    boolean existsByEmail(String email);
 
     Optional<PlayerEntity> findById(Long id);
 

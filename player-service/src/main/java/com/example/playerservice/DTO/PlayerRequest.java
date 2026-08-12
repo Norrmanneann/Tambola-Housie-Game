@@ -13,12 +13,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class PlayerRequest {
-
     @NotBlank
     @Size(min = 2, max = 30)
     private String name;
-
-    @Email
-    @NotBlank
-    private String email;
 }

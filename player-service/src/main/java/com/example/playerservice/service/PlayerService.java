@@ -17,7 +17,6 @@ public class PlayerService {
     public PlayerResponse createPlayer(PlayerRequest request){
         PlayerEntity playerEntity = new PlayerEntity();
         playerEntity.setName(request.getName());
-        playerEntity.setEmail(request.getEmail());
 
         PlayerEntity entity = repository.save(playerEntity);
 

@@ -1,22 +1,19 @@
 package com.example.roomservice.service;
 
-import com.example.roomservice.DTO.JoinRoomRequest;
+import com.example.roomservice.DTO.*;
 import com.example.roomservice.entity.RoomEntity;
-import com.example.roomservice.DTO.RoomRequest;
-import com.example.roomservice.DTO.RoomResponse;
+import com.example.roomservice.feign.PlayerServiceFeign;
 import com.example.roomservice.repository.RoomRepository;
 import lombok.AllArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 @org.springframework.stereotype.Service
 @AllArgsConstructor
 public class RoomService {
 
     private final RoomRepository repository;
+    private final PlayerServiceFeign playerServiceFeign;
 
     public RoomResponse createRoom(RoomRequest request){
         String roomCode = "";
@@ -35,14 +32,31 @@ public class RoomService {
         entity.setAvailableSlots(entity.getMaxPlayers()-1);
         entity.setCreatedBy(request.getPlayerId());
 
-        RoomEntity roomEntity = repository.save(entity);
+        Set<Long> ids = entity.getPlayerIds();
+        PlayerRequest playerRequest = new PlayerRequest();
+        playerRequest.setIds(ids);
 
-        return RoomResponse.fromEntity(roomEntity);
+        List<PlayerResponse> responses = playerServiceFeign.getAllPlayersById(playerRequest);
+        List<String> names = responses.stream()
+                .map(PlayerResponse::getName)
+                .toList();
+
+        RoomEntity saved = repository.save(entity);
+        return RoomResponse.fromEntity(saved,names);
     }
 
     public RoomResponse joinRoom(JoinRoomRequest request){
         RoomEntity entity = repository.findByRoomCode(request.getRoomCode())
                 .orElseThrow(() -> new RuntimeException("Not Found")) ;
+
+        Set<Long> ids = entity.getPlayerIds();
+        PlayerRequest playerRequest = new PlayerRequest();
+        playerRequest.setIds(ids);
+
+        List<PlayerResponse> responses = playerServiceFeign.getAllPlayersById(playerRequest);
+        List<String> names = responses.stream()
+                .map(PlayerResponse::getName)
+                .toList();
 
         if(entity.getAvailableSlots()<=0) throw new RuntimeException("No free slots available");
 
@@ -57,6 +71,6 @@ public class RoomService {
         }
         RoomEntity saved = repository.save(entity);
 
-        return RoomResponse.fromEntity(saved);
+        return RoomResponse.fromEntity(saved,names);
     }
 }

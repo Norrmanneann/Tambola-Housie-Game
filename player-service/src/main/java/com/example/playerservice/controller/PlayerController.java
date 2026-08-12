@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("player/api")
+@RequestMapping("/player/api")
 @AllArgsConstructor
 public class PlayerController {
     private final PlayerService service;
@@ -31,6 +31,6 @@ public class PlayerController {
     @PostMapping("/ids")
     public ResponseEntity<List<PlayerResponse>> getAllPlayersById(@RequestBody PlayerIdsRequest request){
         List<PlayerResponse> responses = service.getAllPlayersByIds(request);
-        return ResponseEntity.status(HttpStatus.FOUND).body(responses);
+        return ResponseEntity.status(HttpStatus.OK).body(responses);
     }
 }

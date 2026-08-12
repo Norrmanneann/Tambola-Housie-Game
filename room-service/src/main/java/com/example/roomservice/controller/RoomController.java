@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("room/api")
+@RequestMapping("/room/api")
 @AllArgsConstructor
 public class RoomController {
 
